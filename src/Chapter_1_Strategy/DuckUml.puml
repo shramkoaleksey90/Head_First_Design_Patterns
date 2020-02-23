@@ -1,0 +1,93 @@
+@startuml
+
+ Duck --> FlyBehavior
+ Duck --> QuackBehavior
+ package fly{
+    FlyBehavior <|.. FlyNoWay
+    FlyBehavior <|.. FlyRocketPowered
+    FlyBehavior <|.. FlyWithWings
+ }
+ package quack{
+    QuackBehavior <|.. Quack
+    QuackBehavior <|.. Squeak
+    QuackBehavior <|.. MuteQuack
+ }
+ package duck{
+    Duck <|-- DecoyDuck
+    Duck <|-- MallardDuck
+    Duck <|-- ModelDuck
+    Duck <|-- RedheadDuck
+    Duck <|-- RubberDuck
+ }
+
+ class FlyRocketPowered{
+    fly(){ fly on a rocket}
+ }
+
+ class FlyWithWings{
+    fly(){normal fly}
+ }
+
+ class FlyNoWay{
+    fly(){don't fly}
+ }
+
+ interface QuackBehavior{
+    quack()
+ }
+
+ class Quack{
+    quack(){standard quack}
+ }
+
+ class Squeak{
+    quack(){rubber squeak}
+ }
+
+ class MuteQuack{
+    quack(){silence}
+ }
+
+ abstract class Duck{
+    FlyBehavior flyBehavior;
+    QuackBehavior quackBehavior;
+    --
+    + performQuack()
+    + performFly()
+    + setFlyBehavior(FlyBehavior fb)
+    + setQuackBehavior(QuackBehavior qb)
+    ~ swim()
+    ~ {abstract} display()
+ }
+
+ class MallardDuck{
+ --
+ MallardDuck(){}
+ display()
+ }
+
+ class ModelDuck{
+ --
+ ModelDuck(){}
+ display()
+ }
+
+ class DecoyDuck{
+ display()
+ }
+
+ class RedheadDuck{
+ display()
+ }
+
+ class RubberDuck{
+ display()
+ }
+
+ class MiniDuckSimulator{
+  {static} void main()
+ }
+
+
+
+@enduml

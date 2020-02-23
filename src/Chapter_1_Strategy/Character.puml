@@ -1,0 +1,53 @@
+@startuml
+    Character --> WeaponBehavior
+
+package weapon{
+
+    WeaponBehavior <|.. KnifeBehavior
+    WeaponBehavior <|.. AxeBehavior
+    WeaponBehavior <|.. SwordBehavior
+    WeaponBehavior <|.. BowAndArrowBehavior
+
+    interface WeaponBehavior{
+        useWeapon();
+    }
+    class KnifeBehavior{
+        useWeapon(){knife kill}
+    }
+    class AxeBehavior{
+        useWeapon(){axe kill}
+    }
+    class SwordBehavior{
+       useWeapon(){sword kill}
+    }
+    class BowAndArrowBehavior{
+       useWeapon(){arrow kill}
+    }
+}
+
+package character{
+
+    Character <|-- Queen
+    Character <|-- Troll
+    Character <|-- King
+    Character <|-- Knight
+
+    abstract class Character{
+        WeaponBehavior weapon;
+        {abstract} fight()
+        setWeapon(WeaponBehavior weapon){this.weapon = weapon}
+    }
+    class Queen{
+        fight(){...}
+    }
+    class Troll{
+        fight(){...}
+    }
+    class King{
+        fight(){...}
+    }
+    class Knight{
+        fight(){...}
+    }
+}
+@enduml
