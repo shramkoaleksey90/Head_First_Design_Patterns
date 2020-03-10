@@ -1,0 +1,106 @@
+@startuml
+
+Subject --* Observer
+Subject <|.. WeatherData
+WeatherData --* CurrentConditionsDisplay
+WeatherStation --* WeatherData
+package display {
+Observer <|.. CurrentConditionsDisplay
+Observer <|.. StatisticsDisplay
+Observer <|.. ThirdPartDisplay
+Observer <|.. ForecastDisplay
+Observer <|.. HeatIndexDisplay
+}
+DisplayElement <|.. CurrentConditionsDisplay
+DisplayElement <|.. StatisticsDisplay
+DisplayElement <|.. ThirdPartDisplay
+DisplayElement <|.. ForecastDisplay
+DisplayElement <|.. HeatIndexDisplay
+
+
+
++interface Subject{
+    + registerObserver(Observer observer)
+    + removeObserver(Observer observer)
+    + notifyObserver()
+}
+
++interface Observer{
+    + update(float temp, float humidity, float pressure)
+}
+
++interface DisplayElement{
+    + display()
+}
+
++class WeatherStation{
+    + {static} main()
+}
+
++class WeatherData{
+    - ArrayList observers
+    - float temperature
+    - float humidity
+    - float pressure
+    --
+    + WeatherData()
+    + setMeasurements(float temperature, float humidity, float pressure)
+    + registerObserver(Observer observer)
+    + removeObserver(Observer observer)
+    + notifyObserver()
+    - measurementsChanged()
+}
+
++class CurrentConditionsDisplay{
+    - float temperature
+    - float humidity
+    - Subject weatherDate
+    --
+    + CurrentConditionsDisplay(Subject weatherDate)
+    + update(float temp, float humidity, float pressure)
+    + display()
+}
+
++class StatisticsDisplay{
+    - float maxTem
+    - float minTem
+    - float temSum
+    - int numReadings
+    - WeatherData weatherData
+    --
+    + StatisticsDisplay(WeatherData weatherData)
+    + update(float temp, float humidity, float pressure)
+    + display()
+}
+
++class ForecastDisplay{
+    - float currentPressure
+    - float lastPressure
+    - WeatherData weatherData
+    --
+    + ForecastDisplay(WeatherData weatherData)
+    + update(float temp, float humidity, float pressure)
+    + display()
+}
+
++class HeatIndexDisplay{
+    - heatIndex
+    - WeatherData weatherData
+    --
+    + HeatIndexDisplay(WeatherData weatherData)
+    - computeHeatIndex()
+    + update(float temp, float humidity, float pressure)
+    + display()
+}
+
+class ThirdPartDisplay{
+    - float temperature;
+    - float humidity;
+    - float pressure;
+    - WeatherData weatherData;
+    --
+    + ThirdPartDisplay(WeatherData weatherData)
+    + update(float temp, float humidity, float pressure)
+    + display()
+}
+@enduml
